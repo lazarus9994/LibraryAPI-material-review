@@ -1,6 +1,7 @@
 package com.libraryapi.controller;
 
 
+import com.libraryapi.entity.Book;
 import com.libraryapi.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,23 +16,23 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<String> getAllBooks(){
         return bookService.getAllBooks();
     }
 
-    @GetMapping
-    public String getBookById(@RequestParam int id){
+    @GetMapping("/{id}")
+    public String getBookById(@PathVariable int id){
         return bookService.getBookById(id);
     }
 
-    @PostMapping
-    public void addBook(@RequestBody String title, String author, int publishedYear){
-        bookService.addBook(title, author, publishedYear);
+    @PostMapping("/add")
+    public void addBook(@RequestBody Book book){
+        bookService.addBook(book.getTitle(), book.getAuthor(), book.getPublishedYear());
     }
 
-    @DeleteMapping
-    public void deleteById(@RequestBody int id){
+    @DeleteMapping("/delete/{id}")
+    public void deleteById(@PathVariable int id){
         bookService.deleteById(id);
     }
 }
